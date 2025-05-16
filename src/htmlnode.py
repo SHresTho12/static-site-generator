@@ -41,7 +41,7 @@ class LeafNode(HTMLNODE):
 
 class ParentNode(HTMLNODE):
     def __init__(self,tag,children,props=None):
-        super().__init__(tag,None,children=children,props=props) # Corrected super() call
+        super().__init__(tag,None,children=children,props=props) 
     
     def to_html(self):
         if self.tag is None:

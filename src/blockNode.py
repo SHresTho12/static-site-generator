@@ -11,6 +11,16 @@ class BlockType(Enum):
     DIVIDER = "divider"
     TABLE = "table"
 
+class BlockTags(Enum):
+    PARAGRAPH = "<p>"
+    QUOTE = "<blockquote>"
+    CODE = "<code>"
+    ORDERED_LIST = "<ol>"
+    UNORDERED_LIST = "<ul>"
+    HEADING = "<h1>"
+    HORIZONTAL_RULE = "<hr>"
+    DIVIDER = "<br>"
+    TABLE = "<table>"   
 
 
 def block_to_block_type(block):

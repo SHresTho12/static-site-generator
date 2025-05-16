@@ -33,6 +33,9 @@ class TestBlockToBlockType(unittest.TestCase):
     def test_invalid_ordered_list(self):
         block = "1. First\n3. Third"
         self.assertEqual(block_to_block_type(block), BlockType.PARAGRAPH)
+    def test_link_block(self):
+        block = "[I am a link](something.com)"
+        self.assertEqual(block_to_block_type(block),BlockType.PARAGRAPH)
 
 if __name__ == "__main__":
     unittest.main()
