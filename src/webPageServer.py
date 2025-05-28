@@ -13,7 +13,7 @@ def extract_title(markdown):
         raise Exception("No title found")
     
     
-def generate_page(from_path,template_path,dest_path):
+def generate_page(from_path,template_path,dest_path,basepath):
     print(f"Generating HTML file from ${from_path} to ${dest_path} using ${template_path}")
     with open(from_path,"r") as f:
         markdown = f.read()
@@ -24,12 +24,13 @@ def generate_page(from_path,template_path,dest_path):
     title = extract_title(markdown)
     page = re.sub(r"{{ Title }}",title,template)
     page = re.sub(r"{{ Content }}",html.to_html(), page)
-    
+    page = re.sub(r'href="/', f'href="{basepath}', page)
+    page = re.sub(r'src="/', f'src="{basepath}', page)
     with open(dest_path,"w") as f:
         f.write(page)
     
     
-def generate_pages_recursive(dir_path_content,template_path,dest_dir_path):
+def generate_pages_recursive(dir_path_content,template_path,dest_dir_path,basepath):
     if not os.path.exists(dir_path_content):
         raise Exception("Invalid Directory Path")
     if not os.path.exists(dest_dir_path):
@@ -39,10 +40,10 @@ def generate_pages_recursive(dir_path_content,template_path,dest_dir_path):
         if os.path.isfile(item_path):
             if item.endswith(".md"):
                 dest_path = os.path.join(dest_dir_path, item.replace(".md", ".html"))
-                generate_page(item_path, template_path, dest_path)
+                generate_page(item_path, template_path, dest_path,basepath)
         elif os.path.isdir(item_path):
             sub_dest_dir_path = os.path.join(dest_dir_path, item)
-            generate_pages_recursive(item_path, template_path, sub_dest_dir_path)
+            generate_pages_recursive(item_path, template_path, sub_dest_dir_path,basepath)
             
 
 
